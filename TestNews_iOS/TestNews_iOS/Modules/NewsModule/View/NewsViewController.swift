@@ -7,23 +7,48 @@
 
 import UIKit
 
-class NewsViewController: UIViewController {
+protocol NewsViewProtocol: AnyObject {
+    func success()
+    func failure(error: Error)
+}
+
+class NewsViewController: UIViewController, NewsViewProtocol {
+    @IBOutlet weak var newsTableView: UITableView!
+    var presenter: NewsViewPresenterProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        newsTableView.register(UINib(nibName: "NewsTitleTableViewCell", bundle: nil), forCellReuseIdentifier: NewsTitleTableViewCell.key)
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func success() {
+        newsTableView.reloadData()
     }
-    */
+        
+    func failure(error: Error) {
+        print(error.localizedDescription)
+    }
+    
+}
 
+extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        presenter.countNews()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = newsTableView.dequeueReusableCell(withIdentifier: NewsTitleTableViewCell.key, for: indexPath) as? NewsTitleTableViewCell else {return UITableViewCell()}
+        presenter.configureNewsTitleTableViewCell(indexPath: indexPath, cell: cell)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        120
+    }
+    
 }

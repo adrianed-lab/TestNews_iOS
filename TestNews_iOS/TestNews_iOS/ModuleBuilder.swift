@@ -6,3 +6,27 @@
 //
 
 import Foundation
+import UIKit
+
+protocol BuilderProtocol {
+    func createNewsModule() -> UIViewController
+   // func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController
+}
+
+class ModuleBuilder: BuilderProtocol {
+    
+    func createNewsModule() -> UIViewController {
+        let view = NewsViewController()
+        let apiProvider = AlamofireAPIProvider()
+        let presenter = NewsViewPresenter(apiProvider: apiProvider, view: view)
+        view.presenter = presenter
+        return view
+    }
+    
+   //func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController {
+     //   let view = DetailedCityWeatherViewController()
+     //   let presenter = DetailedCityWeatherViewPresenter(view: view, detailedCityWeather: detailedCityWeather )
+   //     view.presenter = presenter
+     //   return view
+    //}
+}
