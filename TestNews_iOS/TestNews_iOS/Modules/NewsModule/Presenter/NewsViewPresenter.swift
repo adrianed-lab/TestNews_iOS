@@ -13,7 +13,7 @@ protocol NewsViewPresenterProtocol: AnyObject {
     func countNews() -> Int
     func getNews()
     func configureNewsTitleTableViewCell(indexPath: IndexPath, cell: NewsTitleTableViewCellProtocol)
-    //func showDetaliedNews(indexPath: IndexPath) -> UIViewController
+    func showDetaliedNews(indexPath: IndexPath) -> UIViewController
     var news: News? {get}
 }
 
@@ -56,8 +56,11 @@ class NewsViewPresenter: NewsViewPresenterProtocol {
         cell.configureCell(title: title, date: date)
     }
     
-    //func showDetaliedNews(indexPath: IndexPath) -> UIViewController {
-        
-   // }
-
+    func showDetaliedNews(indexPath: IndexPath) -> UIViewController {
+        guard let news = news?.results else {return UIViewController()}
+        let detaliedNews = news[indexPath.row]
+        let builder = ModuleBuilder()
+        let detaliedNewsVC = builder.createDetailedNewsModule(detailedNews: detaliedNews)
+        return detaliedNewsVC
+    }
 }

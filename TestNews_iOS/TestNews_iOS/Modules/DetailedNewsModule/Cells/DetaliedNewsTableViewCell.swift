@@ -7,17 +7,24 @@
 
 import UIKit
 
-class DetaliedNewsTableViewCell: UITableViewCell {
+protocol DetaliedNewsTableViewCellProtocol {
+   func configureCell(content: String)
+}
 
+class DetaliedNewsTableViewCell: UITableViewCell, DetaliedNewsTableViewCellProtocol {
+    
+    static let key = "DetaliedNewsTableViewCell"
+    
+    @IBOutlet weak var contentNews: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
+    func configureCell(content: String) {
+        contentNews.text = content
+    }
 }

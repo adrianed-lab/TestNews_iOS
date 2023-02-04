@@ -10,7 +10,7 @@ import UIKit
 
 protocol BuilderProtocol {
     func createNewsModule() -> UIViewController
-   // func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController
+    func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -23,10 +23,10 @@ class ModuleBuilder: BuilderProtocol {
         return view
     }
     
-   //func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController {
-     //   let view = DetailedCityWeatherViewController()
-     //   let presenter = DetailedCityWeatherViewPresenter(view: view, detailedCityWeather: detailedCityWeather )
-   //     view.presenter = presenter
-     //   return view
-    //}
+   func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController {
+        let view = DetaliedNewsViewController()
+        let presenter = DetaliedNewsViewPresenter(view: view, detaliedNews: detailedNews)
+        view.presenter = presenter
+        return view
+    }
 }

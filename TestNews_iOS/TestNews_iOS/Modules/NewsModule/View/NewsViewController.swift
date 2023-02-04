@@ -13,21 +13,33 @@ protocol NewsViewProtocol: AnyObject {
 }
 
 class NewsViewController: UIViewController, NewsViewProtocol {
+    
     @IBOutlet weak var newsTableView: UITableView!
     var presenter: NewsViewPresenterProtocol!
+    let newsRefreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "НОВОСТИ В МИРЕ"
         newsTableView.register(UINib(nibName: "NewsTitleTableViewCell", bundle: nil), forCellReuseIdentifier: NewsTitleTableViewCell.key)
+        newsTableView.refreshControl = newsRefreshControl
     }
     
     func success() {
+        newsTableView.refreshControl?.endRefreshing()
         newsTableView.reloadData()
     }
         
     func failure(error: Error) {
         print(error.localizedDescription)
+    }
+    
+    @objc func refresh(sender: UIRefreshControl) {
+        presenter.getNews()
     }
     
 }
@@ -49,6 +61,10 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         120
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.pushViewController(presenter.showDetaliedNews(indexPath: indexPath), animated: true)
     }
     
 }
