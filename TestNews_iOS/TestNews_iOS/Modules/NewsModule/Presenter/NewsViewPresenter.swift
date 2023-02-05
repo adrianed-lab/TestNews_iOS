@@ -18,7 +18,6 @@ protocol NewsViewPresenterProtocol: AnyObject {
 }
 
 class NewsViewPresenter: NewsViewPresenterProtocol {
-   
     private (set) var apiProvider: RestAPIProviderProtocol!
     weak var view: NewsViewProtocol?
     var news: News?

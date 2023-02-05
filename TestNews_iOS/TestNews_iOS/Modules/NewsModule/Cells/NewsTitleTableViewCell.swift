@@ -13,16 +13,17 @@ protocol NewsTitleTableViewCellProtocol: AnyObject {
 
 class NewsTitleTableViewCell: UITableViewCell, NewsTitleTableViewCellProtocol {
     static let key = "NewsTitleTableViewCell"
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    override var isSelected: Bool  {
+        didSet {
+            titleLabel.textColor = isSelected ? .lightGray : .black
+        }
     }
     
     func configureCell(title: String, date: String) {

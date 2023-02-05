@@ -12,10 +12,9 @@ protocol DetaliedNewsTableViewCellProtocol {
 }
 
 class DetaliedNewsTableViewCell: UITableViewCell, DetaliedNewsTableViewCellProtocol {
-    
     static let key = "DetaliedNewsTableViewCell"
-    
     @IBOutlet weak var contentNews: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

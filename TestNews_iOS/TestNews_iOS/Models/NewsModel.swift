@@ -18,7 +18,7 @@ struct NewsResult: Codable {
     let title: String?
     let link: String?
     let keywords: [String]?
-    let creator, videoURL: String?
+    let creator, videoURL: [String]?
     let description: String?
     let content: String?
     let pubDate: String?

@@ -14,7 +14,6 @@ protocol BuilderProtocol {
 }
 
 class ModuleBuilder: BuilderProtocol {
-    
     func createNewsModule() -> UIViewController {
         let view = NewsViewController()
         let apiProvider = AlamofireAPIProvider()
@@ -23,7 +22,7 @@ class ModuleBuilder: BuilderProtocol {
         return view
     }
     
-   func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController {
+    func createDetailedNewsModule(detailedNews: NewsResult) -> UIViewController {
         let view = DetaliedNewsViewController()
         let presenter = DetaliedNewsViewPresenter(view: view, detaliedNews: detailedNews)
         view.presenter = presenter

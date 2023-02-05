@@ -13,20 +13,21 @@ protocol NewsViewProtocol: AnyObject {
 }
 
 class NewsViewController: UIViewController, NewsViewProtocol {
-    
     @IBOutlet weak var newsTableView: UITableView!
     var presenter: NewsViewPresenterProtocol!
-    let newsRefreshControl: UIRefreshControl = {
+    var newsRefreshControl: UIRefreshControl {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return refreshControl
-    }()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "НОВОСТИ В МИРЕ"
         newsTableView.register(UINib(nibName: "NewsTitleTableViewCell", bundle: nil), forCellReuseIdentifier: NewsTitleTableViewCell.key)
         newsTableView.refreshControl = newsRefreshControl
+        newsTableView.allowsMultipleSelection = true
+        navigationController?.navigationBar.tintColor = .red
     }
     
     func success() {
@@ -41,7 +42,6 @@ class NewsViewController: UIViewController, NewsViewProtocol {
     @objc func refresh(sender: UIRefreshControl) {
         presenter.getNews()
     }
-    
 }
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -64,7 +64,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        newsTableView.cellForRow(at: indexPath)?.isSelected = true
         navigationController?.pushViewController(presenter.showDetaliedNews(indexPath: indexPath), animated: true)
     }
-    
 }

@@ -14,9 +14,8 @@ protocol RestAPIProviderProtocol {
 }
 
 class AlamofireAPIProvider: RestAPIProviderProtocol {
-    
     func getNews(completion: @escaping (Result<News, Error>) -> Void) {
-        let parameters = addParametrs(queryItems: ["category" : "world", "language" : "ru"])
+        let parameters = addParametrs(queryItems: ["category" : "world", "language" : "en"])
         AF.request(URLConstants.getNewsURL, method: .get, parameters: parameters).responseDecodable(of: News.self) {
             response in
             switch response.result {

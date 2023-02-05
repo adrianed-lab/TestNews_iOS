@@ -14,11 +14,25 @@ protocol DetaliedNewsViewProtocol: AnyObject {
 class DetaliedNewsViewController: UIViewController, DetaliedNewsViewProtocol {
     @IBOutlet weak var detaliedNewsTableView: UITableView!
     var presenter: DetaliedNewsViewPresenterProtocol!
+    var shareLinkNewsButton: UIBarButtonItem {
+        let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .done, target: self, action: #selector(shareLink))
+        shareButton.tintColor = .black
+        shareButton.width = 30
+        return shareButton
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         detaliedNewsTableView.register(UINib(nibName: "DetaliedNewsTableViewCell", bundle: nil), forCellReuseIdentifier: DetaliedNewsTableViewCell.key)
         detaliedNewsTableView.register(UINib(nibName: "NewsTitleTableViewCell", bundle: nil), forCellReuseIdentifier: NewsTitleTableViewCell.key)
+        navigationItem.rightBarButtonItems = [shareLinkNewsButton]
+
+    }
+    
+    @objc func shareLink(sender: UIBarButtonItem) {
+        let link = presenter.getLinkURL()
+        let shareController = UIActivityViewController(activityItems: [link], applicationActivities: .none)
+        present(shareController, animated: true)
     }
 }
 
@@ -55,5 +69,9 @@ extension DetaliedNewsViewController: UITableViewDelegate, UITableViewDataSource
         default:
             return 0
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
 }

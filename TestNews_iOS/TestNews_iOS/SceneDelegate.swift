@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let builder = ModuleBuilder()
         let newsVC = builder.createNewsModule()
         let navigationVC = UINavigationController(rootViewController: newsVC)
-        //navigationVC.navigationItem.backBarButtonItem?.tintColor = .red
         window?.rootViewController = navigationVC
         window?.makeKeyAndVisible()
     }

@@ -9,7 +9,6 @@ import Foundation
 
 struct URLConstants {
     static var baseURL = "https://newsdata.io/"
-    
     static var getNewsURL: String {
         return baseURL.appending("api/1/news")
     }
